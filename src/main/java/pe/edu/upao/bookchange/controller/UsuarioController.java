@@ -1,5 +1,6 @@
 package pe.edu.upao.bookchange.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +12,7 @@ import pe.edu.upao.bookchange.service.UsuarioService;
 import java.util.Map;
 
 @RestController
+@Tag(name = "Usuario", description = "Usuario managment APIs")
 @RequestMapping("/api/usuarios")
 public class UsuarioController {
 

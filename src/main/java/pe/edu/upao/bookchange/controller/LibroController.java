@@ -1,5 +1,6 @@
 package pe.edu.upao.bookchange.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.upao.bookchange.dto.LibroDto;
 import pe.edu.upao.bookchange.service.LibroService;
@@ -7,6 +8,7 @@ import pe.edu.upao.bookchange.service.LibroService;
 import java.util.List;
 
 @RestController
+@Tag(name = "Libro", description = "Libro managment APIs")
 @RequestMapping("/api/v1/libros")
 public class LibroController {
 

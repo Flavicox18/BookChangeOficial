@@ -1,5 +1,6 @@
 package pe.edu.upao.bookchange.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,6 +9,7 @@ import pe.edu.upao.bookchange.entity.Genero;
 import pe.edu.upao.bookchange.service.GeneroService;
 
 @RestController
+@Tag(name = "Género", description = "Género managment APIs")
 @RequestMapping("/api/generos")
 public class GeneroController {
 

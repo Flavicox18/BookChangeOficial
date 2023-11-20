@@ -15,5 +15,5 @@ public class Genero {
     private String nombreGenero;
 
     @ManyToMany(mappedBy = "genero")
-    private List<Libro> libros;
+    private List<Libro> libro;
 }

@@ -1,11 +1,11 @@
 package pe.edu.upao.bookchange.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.upao.bookchange.entity.Intercambio;
 import pe.edu.upao.bookchange.service.IntercambioService;
@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 
 
 @RestController
+@Tag(name = "Intercambio", description = "Intercambio managment APIs")
 @RequestMapping("/intercambio")
 public class IntercambioController {
 

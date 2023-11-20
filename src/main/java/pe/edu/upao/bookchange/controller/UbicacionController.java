@@ -1,5 +1,6 @@
 package pe.edu.upao.bookchange.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,6 +9,7 @@ import pe.edu.upao.bookchange.entity.Ubicacion;
 import pe.edu.upao.bookchange.service.UbicacionService;
 
 @RestController
+@Tag(name = "Ubicación", description = "Ubicación managment APIs")
 @RequestMapping("/api/ubicaciones")
 public class UbicacionController {
 

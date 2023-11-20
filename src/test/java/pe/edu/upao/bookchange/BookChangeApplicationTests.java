@@ -13,63 +13,61 @@ import pe.edu.upao.bookchange.controller.IntercambioController;
 import pe.edu.upao.bookchange.entity.Intercambio;
 import pe.edu.upao.bookchange.service.IntercambioService;
 
-import java.util.List;
-
 @SpringBootTest
 class BookChangeApplicationTests {
 
-    @InjectMocks
-    private IntercambioController intercambioController;
+	@InjectMocks
+	private IntercambioController intercambioController;
 
-    @Mock
-    private IntercambioService intercambioService;
+	@Mock
+	private IntercambioService intercambioService;
 
-    @Mock
-    private BindingResult bindingResult;
+	@Mock
+	private BindingResult bindingResult;
 
-    @BeforeEach
-    public void setUp() {
-    }
-
-
-    @Test
-    public void testAddIntercambio() {
-
-        Mockito.when(bindingResult.hasErrors()).thenReturn(false);
-        Intercambio intercambio = new Intercambio();
-
-        ResponseEntity<?> response = intercambioController.addIntercambio(intercambio, bindingResult);
-
-        assert response.getStatusCode() == HttpStatus.OK;
-
-    }
-
-    @Test
-    public void testAceptarIntercambio() {
-
-        Integer intercambioId = 1;
+	@BeforeEach
+	public void setUp() {
+	}
 
 
-        Mockito.doNothing().when(intercambioService).aceptarIntercambio(intercambioId);
+	@Test
+	public void testAddIntercambio() {
 
-        ResponseEntity<?> response = intercambioController.aceptarIntercambio(intercambioId);
+		Mockito.when(bindingResult.hasErrors()).thenReturn(false);
+		Intercambio intercambio = new Intercambio();
 
-        assert response.getStatusCode() == HttpStatus.OK;
+		ResponseEntity<?> response = intercambioController.addIntercambio(intercambio, bindingResult);
 
-    }
+		assert response.getStatusCode() == HttpStatus.OK;
 
-    @Test
-    public void testRechazarIntercambio() {
+	}
 
-        Integer intercambioId = 1;
+	@Test
+	public void testAceptarIntercambio() {
+
+		Integer intercambioId = 1;
 
 
-        Mockito.doNothing().when(intercambioService).rechazarIntercambio(intercambioId);
+		Mockito.doNothing().when(intercambioService).aceptarIntercambio(intercambioId);
 
-        ResponseEntity<?> response = intercambioController.rechazarIntercambio(intercambioId);
+		ResponseEntity<?> response = intercambioController.aceptarIntercambio(intercambioId);
 
-        assert response.getStatusCode() == HttpStatus.OK;
+		assert response.getStatusCode() == HttpStatus.OK;
 
-    }
+	}
+
+	@Test
+	public void testRechazarIntercambio() {
+
+		Integer intercambioId = 1;
+
+
+		Mockito.doNothing().when(intercambioService).rechazarIntercambio(intercambioId);
+
+		ResponseEntity<?> response = intercambioController.rechazarIntercambio(intercambioId);
+
+		assert response.getStatusCode() == HttpStatus.OK;
+
+	}
 
 }

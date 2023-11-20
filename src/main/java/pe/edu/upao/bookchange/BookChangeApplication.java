@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class BookChangeApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(BookChangeApplication.class, args);
-    }
+	public static void main(String[] args) {
+		SpringApplication.run(BookChangeApplication.class, args);
+	}
 
 }
