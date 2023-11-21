@@ -1,33 +1,31 @@
 package pe.edu.upao.bookchange.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import pe.edu.upao.bookchange.model.Intercambio;
-import pe.edu.upao.bookchange.service.Intercambioservice;
+import org.springframework.web.bind.annotation.*;
+import pe.edu.upao.bookchange.entity.Intercambio;
+import pe.edu.upao.bookchange.service.IntercambioService;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+
 @RestController
 @RequestMapping("/intercambio")
-public class Intercambiocontroller {
+public class IntercambioController {
 
-    private final Intercambioservice intercambioService;
+    private final IntercambioService intercambioService;
 
     @Autowired
-    public Intercambiocontroller(Intercambioservice intercambioservice) {
-        this.IntercambioService = intercambioservice;
+    public IntercambioController(IntercambioService intercambioService) {
+        this.intercambioService = intercambioService;
     }
 
     @PostMapping
-    public ResponseEntity<?> addIntercambio(@Validated @RequestBody Intercambio intercambio, BindingResult bindingResult) {
+    public ResponseEntity<?> addIntercambio(@Valid @RequestBody Intercambio intercambio, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             String errorMessage = "Error";
             List<String> errors = bindingResult.getAllErrors().stream()
@@ -37,9 +35,30 @@ public class Intercambiocontroller {
             return ResponseEntity.badRequest().body(errorMessage + "" + errors);
         }
 
-        Intercambio newIntercambio = intercambioservice.addIntercambio(intercambio);
+        Intercambio newIntercambio = intercambioService.addIntercambio(intercambio);
         return ResponseEntity.status(HttpStatus.OK).body("Solicitud Creada");
 
     }
+
+    @PutMapping("/{id}/aceptar")
+    public ResponseEntity<?> aceptarIntercambio(@Valid @PathVariable Integer id) {
+        try {
+            intercambioService.aceptarIntercambio(id);
+            return ResponseEntity.ok("Intercambio aceptado");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error al aceptar el intercambio: " + e.getMessage());
+        }
+    }
+
+    @PutMapping("/{id}/rechazar")
+    public ResponseEntity<?> rechazarIntercambio(@Valid @PathVariable Integer id) {
+        try {
+            intercambioService.rechazarIntercambio(id);
+            return ResponseEntity.ok("Intercambio rechazado");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error al rechazar el intercambio: " + e.getMessage());
+        }
+    }
+
 
 }

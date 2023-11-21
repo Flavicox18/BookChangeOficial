@@ -1,16 +1,36 @@
 package pe.edu.upao.bookchange.service;
 
+
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
-import pe.edu.upao.bookchange.model.Intercambio;
-import pe.edu.upao.bookchange.repository.Intercambiorepository;
+import pe.edu.upao.bookchange.entity.Intercambio;
+import pe.edu.upao.bookchange.repository.IntercambioRepository;
+
+
 
 @Service
-public class Intercambioservice {
-    public final Intercambiorepository intercambiorepository;
+public class IntercambioService {
 
-    public Intercambioservice(Intercambiorepository intercambiorepository){ this.intercambiorepository = intercambiorepository;}
+    public final IntercambioRepository intercambioRepository;
+
+    public IntercambioService(IntercambioRepository intercambioRepository){ this.intercambioRepository = intercambioRepository;}
 
     public Intercambio addIntercambio(Intercambio intercambio){
-        return intercambiorepository.save(intercambio);
+        return intercambioRepository.save(intercambio);
+    }
+
+    public void aceptarIntercambio(Integer id) {
+        Intercambio intercambio = intercambioRepository.findById(id.longValue())
+                .orElseThrow(() -> new EntityNotFoundException("Intercambio no encontrado"));
+
+        intercambio.setEstado("aceptado");
+        intercambioRepository.save(intercambio);
+    }
+    public void rechazarIntercambio(Integer id) {
+        Intercambio intercambio = intercambioRepository.findById(id.longValue())
+                .orElseThrow(() -> new EntityNotFoundException("Intercambio no encontrado"));
+
+        intercambio.setEstado("rechazado");
+        intercambioRepository.save(intercambio);
     }
 }
