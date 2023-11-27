@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.junit.jupiter.api.Assertions.*;
@@ -119,5 +120,35 @@ public class LibroServiceTest {
         assertEquals(ResponseEntity.status(HttpStatus.OK).body("Libro Eliminado"), responseEntity);
     }
 
+    @Test
+    public void testBuscarLibroPorTituloOAutor() {
+        // Mock de varios libros disponibles
+        Libro libro1 = new Libro();
+        libro1.setIdLibro(1L);
+        libro1.setNombre("Libro 1");
+        libro1.setAutor("Autor 1");
+        libro1.setEstado("disponible");
 
+        Libro libro2 = new Libro();
+        libro2.setIdLibro(2L);
+        libro2.setNombre("Libro 2");
+        libro2.setAutor("Autor 2");
+        libro2.setEstado("disponible");
+
+        List<Libro> librosEncontrados = new ArrayList<>();
+        librosEncontrados.add(libro1);
+        librosEncontrados.add(libro2);
+
+        // Configuración del comportamiento del repositorio
+        when(libroRepository.findByNombreContainingIgnoreCaseOrAutorContainingIgnoreCase(anyString(), anyString()))
+                .thenReturn(librosEncontrados);
+
+        // Prueba del método buscarLibroPorTituloOAutor
+        List<LibroDto> librosDto = libroService.buscarLibroPorTituloOAutor("Libro");
+
+        // Verificación de resultados
+        assertNotNull(librosDto);
+        assertEquals(2, librosDto.size());
+        // Verifica otros atributos si es necesario
+    }
 }

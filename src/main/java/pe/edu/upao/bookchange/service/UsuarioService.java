@@ -47,7 +47,7 @@ public class UsuarioService{
         }
     }
 
-    private UsuarioDto convertirUsuarioAUsuarioDto(Usuario usuario) {
+    public UsuarioDto convertirUsuarioAUsuarioDto(Usuario usuario) {
         UsuarioDto usuarioDto = new UsuarioDto();
         usuarioDto.setIdUsuario(usuario.getIdUsuario());
         usuarioDto.setDni(usuario.getDni());
@@ -55,8 +55,15 @@ public class UsuarioService{
         usuarioDto.setApellido(usuario.getApellido());
         usuarioDto.setCorreo(usuario.getCorreo());
         usuarioDto.setFotoPerfil(usuario.getFotoPerfil());
-        usuarioDto.getUbicacion().setIdUbicacion(usuario.getUbicacion().getIdUbicacion());
-        usuarioDto.getGenero().setIdGenero(usuario.getGenero().getIdGenero());
+        if (usuario.getUbicacion() != null) {
+            usuarioDto.getUbicacion().setIdUbicacion(usuario.getUbicacion().getIdUbicacion());
+        }
+
+        // Manejo de genero nulo
+        if (usuario.getGenero() != null) {
+            usuarioDto.getGenero().setIdGenero(usuario.getGenero().getIdGenero());
+        }
+
         return usuarioDto;
     }
 
@@ -78,5 +85,15 @@ public class UsuarioService{
 
     public void eliminarUsuario(Long idUsuario){
         usuarioRepository.deleteById(idUsuario);
+    }
+
+    public UsuarioDto obtenerPerfilUsuario(Long idUsuario) {
+        Usuario usuario = usuarioRepository.findById(idUsuario).orElse(null);
+        if (usuario != null) {
+            UsuarioDto usuarioDto = convertirUsuarioAUsuarioDto(usuario);
+
+            return usuarioDto;
+        }
+        return null; // O maneja el caso de usuario no encontrado según tu lógica
     }
 }

@@ -3,6 +3,7 @@ package pe.edu.upao.bookchange.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pe.edu.upao.bookchange.dto.UsuarioDto;
 import pe.edu.upao.bookchange.entity.Libro;
 import pe.edu.upao.bookchange.entity.Usuario;
 import pe.edu.upao.bookchange.service.GeneroService;
@@ -26,13 +27,15 @@ public class UsuarioController {
     }
 
     @PostMapping("/guardar")
-    public void guardarUsuario(@RequestBody Usuario usuario) {
+    public void guardarUsuario(@RequestBody UsuarioDto usuarioDto) {
+        Usuario usuario = usuarioService.convertirUsuarioDtoAUsuario(usuarioDto);
         usuarioService.guardarUsuario(usuario);
     }
 
     @PutMapping("/{idUsuario}")
-    public void actualizarUsuario(@RequestBody Usuario usuario,@PathVariable Long idUsuario){
-        usuarioService.actualizarUsuario(usuario,idUsuario);
+    public void actualizarUsuario(@RequestBody UsuarioDto usuarioDto, @PathVariable Long idUsuario) {
+        Usuario usuario = usuarioService.convertirUsuarioDtoAUsuario(usuarioDto);
+        usuarioService.actualizarUsuario(usuario, idUsuario);
     }
 
     @PostMapping("/iniciar-sesion")
@@ -49,15 +52,26 @@ public class UsuarioController {
         }
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> verPerfil(@PathVariable("id") Long idUsuario) {
+        UsuarioDto usuarioDto = usuarioService.obtenerPerfilUsuario(idUsuario);
+
+        if (usuarioDto != null) {
+            return ResponseEntity.ok(usuarioDto);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("El usuario no ha sido encontrado");
+        }
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> eliminarUsuario(@PathVariable("id") Long idUsuario){
         Usuario usuario = usuarioService.findById(idUsuario);
 
-        if (usuario == null){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("El usuario no ha sido encontrado");
+        if (usuario == null) {
+            return ResponseEntity.notFound().build();
         }
 
         usuarioService.eliminarUsuario(idUsuario);
-        return ResponseEntity.status(HttpStatus.OK).body("Usuario Eliminado");
+        return ResponseEntity.ok("Usuario eliminado");
     }
 }

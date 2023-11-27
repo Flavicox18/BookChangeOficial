@@ -38,9 +38,9 @@ public class LibroController {
     }
 
     @PutMapping("/editar/{idLibro}")
-    public ResponseEntity<?> editarLibro(@PathVariable Long idLibro, @Valid @RequestBody LibroDto libroDto, BindingResult bindingResult){
+    public ResponseEntity<?> editarLibro(@PathVariable Long idLibro, @Valid @RequestBody LibroDto libroDto, BindingResult bindingResult) {
         Libro libroExistente = libroService.findById(idLibro);
-        if (libroExistente == null){
+        if (libroExistente == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("El Libro no ha sido encontrado");
         }
         if (bindingResult.hasErrors()) {
@@ -68,14 +68,19 @@ public class LibroController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> eliminarLibro(@PathVariable("id") Long idLibro){
+    public ResponseEntity<?> eliminarLibro(@PathVariable("id") Long idLibro) {
         Libro libro = libroService.findById(idLibro);
 
-        if (libro == null){
+        if (libro == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("El libro no ha sido encontrado");
         }
 
         libroService.eliminarLibro(idLibro);
         return ResponseEntity.status(HttpStatus.OK).body("Libro Eliminado");
+    }
+
+    @GetMapping("/buscar")
+    public List<LibroDto> buscarLibroPorTituloOAutor(@RequestParam String criterio) {
+        return libroService.buscarLibroPorTituloOAutor(criterio);
     }
 }

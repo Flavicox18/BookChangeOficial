@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import pe.edu.upao.bookchange.dto.LibroDto;
 import pe.edu.upao.bookchange.entity.Libro;
+import pe.edu.upao.bookchange.exception.LibroNoEncontradoException;
 import pe.edu.upao.bookchange.repository.LibroRepository;
 
 import java.util.List;
@@ -102,4 +103,15 @@ public class LibroService {
         libroRepository.save(libro);
     }
 
+    public List<LibroDto> buscarLibroPorTituloOAutor(String criterio) {
+        List<Libro> librosEncontrados = libroRepository.findByNombreContainingIgnoreCaseOrAutorContainingIgnoreCase(criterio, criterio);
+
+        if (!librosEncontrados.isEmpty()) {
+            return librosEncontrados.stream()
+                    .map(this::convertirLibroaLibroDto)
+                    .collect(Collectors.toList());
+        } else {
+            throw new LibroNoEncontradoException("No se ha encontrado el libro");
+        }
+    }
 }

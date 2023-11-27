@@ -10,4 +10,6 @@ import java.util.List;
 public interface LibroRepository extends JpaRepository<Libro, Long> {
 
     List<Libro> findByEstado(String disponible);
+
+    List<Libro> findByNombreContainingIgnoreCaseOrAutorContainingIgnoreCase(String criterio, String criterio1);
 }
