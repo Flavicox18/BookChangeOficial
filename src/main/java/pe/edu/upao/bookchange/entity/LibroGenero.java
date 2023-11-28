@@ -1,7 +1,9 @@
 package pe.edu.upao.bookchange.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
+@Data
 @Entity
 @Table(name = "libro_genero")
 public class LibroGenero {

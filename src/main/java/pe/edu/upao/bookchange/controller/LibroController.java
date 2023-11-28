@@ -1,5 +1,6 @@
 package pe.edu.upao.bookchange.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,8 +13,9 @@ import pe.edu.upao.bookchange.service.LibroService;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Tag(name = "Libro", description = "API de gestión de libros")
 @RestController
-@RequestMapping("/api/v1/libros")
+@RequestMapping("/api/libros")
 public class LibroController {
 
     private final LibroService libroService;

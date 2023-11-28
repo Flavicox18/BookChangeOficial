@@ -2,11 +2,9 @@ package pe.edu.upao.bookchange.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 
 
 @Entity
@@ -21,16 +19,13 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idUsuario;
 
-
     @Column(name = "dni")
     @JsonProperty("dni")
     private int dni;
 
-
     @Column(name = "nombre")
     @JsonProperty("nombre")
     private String nombre;
-
 
     @Column(name = "apellido")
     @JsonProperty("apellido")
@@ -39,7 +34,6 @@ public class Usuario {
     @Column(name = "correo")
     @JsonProperty("correo")
     private String correo;
-
 
     @Column(name = "contrasena")
     @JsonProperty("contrasena")
@@ -53,11 +47,6 @@ public class Usuario {
     @JoinColumn(name = "idUbicacion")
     @JsonProperty("idUbicacion")
     private Ubicacion ubicacion;
-
-    @ManyToOne
-    @JoinColumn(name = "idGenero")
-    @JsonProperty("idGenero")
-    private Genero genero;
 
     public Long getIdUsuario() {
         return idUsuario;
@@ -123,11 +112,4 @@ public class Usuario {
         this.ubicacion = ubicacion;
     }
 
-    public Genero getGenero() {
-        return genero;
-    }
-
-    public void setGenero(Genero genero) {
-        this.genero = genero;
-    }
 }

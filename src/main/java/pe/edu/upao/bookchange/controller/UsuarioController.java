@@ -1,29 +1,27 @@
 package pe.edu.upao.bookchange.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.upao.bookchange.dto.UsuarioDto;
-import pe.edu.upao.bookchange.entity.Libro;
 import pe.edu.upao.bookchange.entity.Usuario;
-import pe.edu.upao.bookchange.service.GeneroService;
 import pe.edu.upao.bookchange.service.UbicacionService;
 import pe.edu.upao.bookchange.service.UsuarioService;
 
 import java.util.Map;
 
+@Tag(name = "Usuario", description = "API de gestión de usuario")
 @RestController
 @RequestMapping("/api/usuarios")
 public class UsuarioController {
 
     private final UsuarioService usuarioService;
     private final UbicacionService ubicacionService;
-    private final GeneroService generoService;
 
-    public UsuarioController(UsuarioService usuarioService, UbicacionService ubicacionService, GeneroService generoService, UbicacionService ubicacionService1, GeneroService generoService1) {
+    public UsuarioController(UsuarioService usuarioService, UbicacionService ubicacionService) {
         this.usuarioService = usuarioService;
-        this.ubicacionService = ubicacionService1;
-        this.generoService = generoService1;
+        this.ubicacionService = ubicacionService;
     }
 
     @PostMapping("/guardar")

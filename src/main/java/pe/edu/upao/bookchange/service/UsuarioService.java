@@ -26,7 +26,6 @@ public class UsuarioService{
     public void actualizarUsuario(Usuario usuario, Long idUsuario){
         Usuario usuarioExistente = usuarioRepository.findById(idUsuario).orElse(new Usuario());
         usuarioExistente.setUbicacion(usuarioExistente.getUbicacion());
-        usuarioExistente.setGenero(usuario.getGenero());
         usuarioRepository.save(usuarioExistente);
 
     }
@@ -57,11 +56,6 @@ public class UsuarioService{
         usuarioDto.setFotoPerfil(usuario.getFotoPerfil());
         if (usuario.getUbicacion() != null) {
             usuarioDto.getUbicacion().setIdUbicacion(usuario.getUbicacion().getIdUbicacion());
-        }
-
-        // Manejo de genero nulo
-        if (usuario.getGenero() != null) {
-            usuarioDto.getGenero().setIdGenero(usuario.getGenero().getIdGenero());
         }
 
         return usuarioDto;

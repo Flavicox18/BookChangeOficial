@@ -36,13 +36,11 @@ public class UsuarioDto {
     @NotBlank(message = "La contraseña no debe estar en blanco")
     private String contrasena;
 
+    @NotBlank(message = "La foto de perfil no debe estar en blanco")
     private String fotoPerfil;
 
     @NotBlank(message = "La idUbicacion no debe estar en blanco")
     private UbicacionDto ubicacion;
-
-    @NotBlank(message = "La idGenero no debe estar en blanco")
-    private GeneroDto genero;
 
     public Long getIdUsuario() {
         return idUsuario;
@@ -108,11 +106,4 @@ public class UsuarioDto {
         this.ubicacion = ubicacion;
     }
 
-    public GeneroDto getGenero() {
-        return genero;
-    }
-
-    public void setGenero(GeneroDto genero) {
-        this.genero = genero;
-    }
 }
