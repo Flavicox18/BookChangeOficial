@@ -30,12 +30,6 @@ public class UsuarioController {
         usuarioService.guardarUsuario(usuario);
     }
 
-    @PutMapping("/{idUsuario}")
-    public void actualizarUsuario(@RequestBody UsuarioDto usuarioDto, @PathVariable Long idUsuario) {
-        Usuario usuario = usuarioService.convertirUsuarioDtoAUsuario(usuarioDto);
-        usuarioService.actualizarUsuario(usuario, idUsuario);
-    }
-
     @PostMapping("/iniciar-sesion")
     public ResponseEntity<?> iniciarSesion(@RequestBody Map<String, String> request) {
         try {
@@ -48,28 +42,5 @@ public class UsuarioController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<?> verPerfil(@PathVariable("id") Long idUsuario) {
-        UsuarioDto usuarioDto = usuarioService.obtenerPerfilUsuario(idUsuario);
-
-        if (usuarioDto != null) {
-            return ResponseEntity.ok(usuarioDto);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("El usuario no ha sido encontrado");
-        }
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> eliminarUsuario(@PathVariable("id") Long idUsuario){
-        Usuario usuario = usuarioService.findById(idUsuario);
-
-        if (usuario == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-        usuarioService.eliminarUsuario(idUsuario);
-        return ResponseEntity.ok("Usuario eliminado");
     }
 }

@@ -23,12 +23,6 @@ public class UsuarioService{
         usuarioRepository.save(usuario);
     }
 
-    public void actualizarUsuario(Usuario usuario, Long idUsuario){
-        Usuario usuarioExistente = usuarioRepository.findById(idUsuario).orElse(new Usuario());
-        usuarioExistente.setUbicacion(usuarioExistente.getUbicacion());
-        usuarioRepository.save(usuarioExistente);
-
-    }
 
     public Usuario iniciarSesion(String correo, String contrasena) {
         Optional<Usuario> usuarioOptional = usuarioRepository.findByCorreo(correo);
@@ -77,9 +71,6 @@ public class UsuarioService{
         return usuarioRepository.findById(id).orElse(null);
     }
 
-    public void eliminarUsuario(Long idUsuario){
-        usuarioRepository.deleteById(idUsuario);
-    }
 
     public UsuarioDto obtenerPerfilUsuario(Long idUsuario) {
         Usuario usuario = usuarioRepository.findById(idUsuario).orElse(null);

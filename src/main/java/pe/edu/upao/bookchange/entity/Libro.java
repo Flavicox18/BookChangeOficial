@@ -40,9 +40,6 @@ public class Libro{
     @Column(name = "fechaLanzamiento")
     private Date fechaLanzamiento;
 
-    @Column(name = "idioma")
-    private String idioma;
-
     @Column(name = "sinopsis")
     private String sinopsis;
 

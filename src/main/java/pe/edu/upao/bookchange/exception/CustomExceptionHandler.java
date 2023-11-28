@@ -6,8 +6,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.context.request.WebRequest;
-
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,16 +37,19 @@ public class CustomExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
-    // Otros manejadores de excepciones si es necesario
-
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<Map<String, Object>> handleOtherExceptions(Exception ex, WebRequest request) {
+    @ExceptionHandler({HttpClientErrorException.class, HttpServerErrorException.class, Exception.class})
+    public ResponseEntity<?> handleOtherExceptions(Exception ex, WebRequest request) {
         Map<String, Object> response = new HashMap<>();
-        response.put("message", "Internal Server Error");
-        response.put("error", ex.getMessage());
-        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        if (ex instanceof HttpClientErrorException) {
+            return ResponseEntity.status(((HttpClientErrorException) ex).getRawStatusCode())
+                    .body("Error de cliente: " + ((HttpClientErrorException) ex).getStatusText());
+        } else if (ex instanceof HttpServerErrorException) {
+            return ResponseEntity.status(((HttpServerErrorException) ex).getRawStatusCode())
+                    .body("Error de servidor: " + ((HttpServerErrorException) ex).getStatusText());
+        } else {
+            response.put("message", "Internal Server Error");
+            response.put("error", ex.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
-
-
-
