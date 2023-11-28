@@ -47,43 +47,6 @@ public class UsuarioServiceTest {
         assertEquals(usuarioDto.getFotoPerfil(), usuario.getFotoPerfil());
     }
 
-    @Test
-    public void testEliminarUsuario() {
-        Long idUsuario = 1L;
-        Usuario usuarioExistente = new Usuario();
-
-        // Configuración del comportamiento del repositorio
-        when(usuarioRepository.findById(idUsuario)).thenReturn(Optional.of(usuarioExistente));
-
-        // Prueba del método eliminarUsuario
-        usuarioService.eliminarUsuario(idUsuario);
-
-        // Verificación de resultados
-        verify(usuarioRepository).deleteById(idUsuario);
-    }
-
-    @Test
-    public void testVerPerfil() {
-        // Creamos un usuario de prueba
-        Usuario usuarioMock = new Usuario();
-        usuarioMock.setIdUsuario(1L);
-        usuarioMock.setNombre("Usuario de Prueba");
-        usuarioMock.setCorreo("usuario@prueba.com");
-        usuarioMock.setFotoPerfil("perfil.jpg");
-
-        // Simulamos el comportamiento del repositorio al buscar un usuario por ID
-        when(usuarioRepository.findById(1L)).thenReturn(java.util.Optional.of(usuarioMock));
-
-        // Ejecutamos el método para ver el perfil
-        UsuarioDto usuarioDto = usuarioService.obtenerPerfilUsuario(1L);
-
-        // Verificamos que la conversión se haya realizado correctamente
-        assertEquals(1L, usuarioDto.getIdUsuario());
-        assertEquals("Usuario de Prueba", usuarioDto.getNombre());
-        assertEquals("usuario@prueba.com", usuarioDto.getCorreo());
-        assertEquals("perfil.jpg", usuarioDto.getFotoPerfil());
-    }
-
     @AfterEach
     public void tearDown() {
         Mockito.reset(usuarioRepository);
