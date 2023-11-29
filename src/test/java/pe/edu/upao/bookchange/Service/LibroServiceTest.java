@@ -136,4 +136,55 @@ public class LibroServiceTest {
         // Verifica otros atributos si es necesario
     }
 
+    @Test
+    public void testEditarLibro() {
+        // Arrange
+        Long idLibro = 1L;
+        LibroDto libroDto = new LibroDto(/* provide necessary values */);
+        BindingResult bindingResult = mock(BindingResult.class);
+
+        LibroService libroService = mock(LibroService.class);
+        LibroController libroController = new LibroController(libroService);
+
+        Libro libroExistente = new Libro(/* provide necessary values */);
+        when(libroService.findById(idLibro)).thenReturn(libroExistente);
+
+        // Act
+        ResponseEntity<?> responseEntity = libroController.editarLibro(idLibro, libroDto, bindingResult);
+
+        // Assert
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals("Libro Actualizado", responseEntity.getBody());
+
+        // Verifica que se haya llamado al método editarLibro de libroService
+        ArgumentCaptor<Libro> libroCaptor = ArgumentCaptor.forClass(Libro.class);
+        verify(libroService).editarLibro(libroCaptor.capture());
+
+        // Verifica que el libroExistente se haya actualizado con los valores de libroDto
+        Libro libroActualizado = libroCaptor.getValue();
+        assertEquals(libroDto.getNombre(), libroActualizado.getNombre());
+        assertEquals(libroDto.getAutor(), libroActualizado.getAutor());
+        // Agrega más aserciones según los campos que tengas en Libro y LibroDto
+
+    }
+
+    @Test
+    public void testEliminarLibroExistente() {
+        Long idLibro = 1L;
+        Libro libroExistente = new Libro();
+        libroExistente.setIdLibro(idLibro);
+
+        // Configuración del comportamiento del repositorio
+        when(libroRepository.findById(idLibro)).thenReturn(Optional.of(libroExistente));
+
+        // Prueba del método eliminarLibro
+        ResponseEntity<?> responseEntity = libroService.eliminarLibro(idLibro);
+
+        // Verificación de resultados
+        verify(libroRepository).findById(idLibro);
+        verify(libroRepository).deleteById(idLibro);
+        assertEquals(ResponseEntity.status(HttpStatus.OK).body("Libro Eliminado"), responseEntity);
+    }
+
+
 }

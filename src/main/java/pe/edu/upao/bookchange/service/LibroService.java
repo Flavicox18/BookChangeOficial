@@ -2,6 +2,8 @@ package pe.edu.upao.bookchange.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.client.RestTemplate;
@@ -173,6 +175,10 @@ public class LibroService {
         }
     }
 
+    public Libro findById(Long id) {
+        return libroRepository.findById(id).orElse(null);
+    }
+
     public List<LibroDto> buscarLibroPorTituloOAutor(String criterio) {
         List<Libro> librosEncontrados = libroRepository.findByNombreContainingIgnoreCaseOrAutorContainingIgnoreCase(criterio, criterio);
 
@@ -183,5 +189,21 @@ public class LibroService {
         } else {
             throw new LibroNoEncontradoException("No se ha encontrado el libro");
         }
+    }
+
+    public void editarLibro(Libro libro) {
+        libroRepository.save(libro);
+    }
+
+
+    public ResponseEntity<?> eliminarLibro(Long idLibro) {
+        Libro libro = libroRepository.findById(idLibro).orElse(null);
+
+        if (libro == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("El libro no ha sido encontrado");
+        }
+
+        libroRepository.deleteById(idLibro);
+        return ResponseEntity.status(HttpStatus.OK).body("Libro Eliminado");
     }
 }

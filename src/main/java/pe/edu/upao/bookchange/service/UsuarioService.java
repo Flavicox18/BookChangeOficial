@@ -2,7 +2,6 @@ package pe.edu.upao.bookchange.service;
 
 import org.springframework.stereotype.Service;
 import pe.edu.upao.bookchange.dto.UsuarioDto;
-import pe.edu.upao.bookchange.entity.Libro;
 import pe.edu.upao.bookchange.entity.Usuario;
 import pe.edu.upao.bookchange.repository.UsuarioRepository;
 
@@ -80,5 +79,16 @@ public class UsuarioService{
             return usuarioDto;
         }
         return null; // O maneja el caso de usuario no encontrado según tu lógica
+    }
+
+    public void eliminarUsuario(Long idUsuario){
+        usuarioRepository.deleteById(idUsuario);
+    }
+
+    public void actualizarUsuario(Usuario usuario, Long idUsuario){
+        Usuario usuarioExistente = usuarioRepository.findById(idUsuario).orElse(new Usuario());
+        usuarioExistente.setUbicacion(usuarioExistente.getUbicacion());
+        usuarioRepository.save(usuarioExistente);
+
     }
 }

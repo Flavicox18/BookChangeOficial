@@ -54,4 +54,50 @@ public class LibroController {
             return ResponseEntity.status(500).body("Error interno del servidor");
         }
     }
+
+    @PutMapping("/editar/{idLibro}")
+    public ResponseEntity<?> editarLibro(@PathVariable Long idLibro, @Valid @RequestBody LibroDto libroDto, BindingResult bindingResult) {
+        Libro libroExistente = libroService.findById(idLibro);
+        if (libroExistente == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("El Libro no ha sido encontrado");
+        }
+        if (bindingResult.hasErrors()) {
+            String errorMessage = "Error";
+            List<String> errors = bindingResult.getAllErrors().stream()
+                    .map(error -> error.getDefaultMessage())
+                    .collect(Collectors.toList());
+
+            return ResponseEntity.badRequest().body(errorMessage + "" + errors);
+        }
+
+        libroExistente.setNombre(libroDto.getNombre());
+        libroExistente.setAutor(libroDto.getAutor());
+        libroExistente.setEditorial(libroDto.getEditorial());
+        libroExistente.setIsbn(libroDto.getIsbn());
+        libroExistente.setEstado(libroDto.getEstado());
+        libroExistente.setFechaLanzamiento(libroDto.getFechaLanzamiento());
+        libroExistente.setSinopsis(libroDto.getSinopsis());
+        libroExistente.setFoto(libroDto.getFoto());
+        libroExistente.setGenero(libroDto.getGenero());
+
+        libroService.editarLibro(libroExistente);
+        return ResponseEntity.ok("Libro Actualizado");
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> eliminarLibro(@PathVariable("id") Long idLibro) {
+        Libro libro = libroService.findById(idLibro);
+
+        if (libro == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("El libro no ha sido encontrado");
+        }
+
+        libroService.eliminarLibro(idLibro);
+        return ResponseEntity.status(HttpStatus.OK).body("Libro Eliminado");
+    }
+
+    @GetMapping("/buscar")
+    public List<LibroDto> buscarLibroPorTituloOAutor(@RequestParam String criterio) {
+        return libroService.buscarLibroPorTituloOAutor(criterio);
+    }
 }
