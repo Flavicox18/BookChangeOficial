@@ -13,7 +13,7 @@ public class UsuarioService{
     private final UsuarioRepository usuarioRepository;
 
 
-    public UsuarioService(UsuarioR epository usuarioRepository) {
+    public UsuarioService(UsuarioRepository usuarioRepository) {
 
         this.usuarioRepository = usuarioRepository;
     }
@@ -47,6 +47,8 @@ public class UsuarioService{
         usuarioDto.setApellido(usuario.getApellido());
         usuarioDto.setCorreo(usuario.getCorreo());
         usuarioDto.setFotoPerfil(usuario.getFotoPerfil());
+        usuarioDto.setTelefono(usuario.getTelefono());
+        usuarioDto.setDescripcion(usuario.getDescripcion());
         if (usuario.getUbicacion() != null) {
             usuarioDto.getUbicacion().setIdUbicacion(usuario.getUbicacion().getIdUbicacion());
         }
@@ -63,6 +65,8 @@ public class UsuarioService{
         usuario.setCorreo(usuarioDto.getCorreo());
         usuario.setContrasena(usuarioDto.getContrasena());
         usuario.setFotoPerfil(usuarioDto.getFotoPerfil());
+        usuario.setTelefono(usuarioDto.getTelefono());
+        usuario.setDescripcion(usuarioDto.getDescripcion());
         return usuario;
     }
 

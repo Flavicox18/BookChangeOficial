@@ -39,6 +39,13 @@ public class UsuarioDto {
     @NotBlank(message = "La foto de perfil no debe estar en blanco")
     private String fotoPerfil;
 
+    @Size(max = 9,min = 9, message = "El telefono debe tener 9 dígitos")
+    @NotBlank(message = "El teléfono no debe estar en blanco")
+    private int telefono;
+
+    @NotBlank(message = "La descripcion no debe estar en blanco")
+    private String descripcion;
+
     @NotBlank(message = "La idUbicacion no debe estar en blanco")
     private UbicacionDto ubicacion;
 
@@ -100,6 +107,22 @@ public class UsuarioDto {
 
     public UbicacionDto getUbicacion() {
         return ubicacion;
+    }
+
+    public int getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(int telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     public void setUbicacion(UbicacionDto ubicacion) {
