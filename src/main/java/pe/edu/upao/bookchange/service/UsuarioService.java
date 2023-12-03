@@ -49,9 +49,8 @@ public class UsuarioService{
         usuarioDto.setFotoPerfil(usuario.getFotoPerfil());
         usuarioDto.setTelefono(usuario.getTelefono());
         usuarioDto.setDescripcion(usuario.getDescripcion());
-        if (usuario.getUbicacion() != null) {
-            usuarioDto.getUbicacion().setIdUbicacion(usuario.getUbicacion().getIdUbicacion());
-        }
+        usuarioDto.setDepartamento(usuario.getDepartamento());
+        usuarioDto.setProvincia(usuario.getProvincia());
 
         return usuarioDto;
     }
@@ -67,6 +66,8 @@ public class UsuarioService{
         usuario.setFotoPerfil(usuarioDto.getFotoPerfil());
         usuario.setTelefono(usuarioDto.getTelefono());
         usuario.setDescripcion(usuarioDto.getDescripcion());
+        usuario.setDepartamento(usuarioDto.getDepartamento());
+        usuario.setProvincia(usuarioDto.getProvincia());
         return usuario;
     }
 
@@ -91,7 +92,6 @@ public class UsuarioService{
 
     public void actualizarUsuario(Usuario usuario, Long idUsuario){
         Usuario usuarioExistente = usuarioRepository.findById(idUsuario).orElse(new Usuario());
-        usuarioExistente.setUbicacion(usuarioExistente.getUbicacion());
         usuarioRepository.save(usuarioExistente);
 
     }

@@ -46,8 +46,11 @@ public class UsuarioDto {
     @NotBlank(message = "La descripcion no debe estar en blanco")
     private String descripcion;
 
-    @NotBlank(message = "La idUbicacion no debe estar en blanco")
-    private UbicacionDto ubicacion;
+    @NotBlank(message = "El departamento no debe estar en blanco")
+    private String departamento;
+
+    @NotBlank(message = "La provincia no debe estar en blanco")
+    private String provincia;
 
     public Long getIdUsuario() {
         return idUsuario;
@@ -105,10 +108,6 @@ public class UsuarioDto {
         this.fotoPerfil = fotoPerfil;
     }
 
-    public UbicacionDto getUbicacion() {
-        return ubicacion;
-    }
-
     public int getTelefono() {
         return telefono;
     }
@@ -125,8 +124,19 @@ public class UsuarioDto {
         this.descripcion = descripcion;
     }
 
-    public void setUbicacion(UbicacionDto ubicacion) {
-        this.ubicacion = ubicacion;
+    public String getDepartamento() {
+        return departamento;
     }
 
+    public void setDepartamento(String departamento) {
+        this.departamento = departamento;
+    }
+
+    public String getProvincia() {
+        return provincia;
+    }
+
+    public void setProvincia(String provincia) {
+        this.provincia = provincia;
+    }
 }

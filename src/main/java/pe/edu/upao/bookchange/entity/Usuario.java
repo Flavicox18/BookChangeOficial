@@ -51,10 +51,13 @@
         @JsonProperty("descripcion")
         private String descripcion;
 
-        @ManyToOne
-        @JoinColumn(name = "idUbicacion")
-        @JsonProperty("idUbicacion")
-        private Ubicacion ubicacion;
+        @Column(name = "departamento")
+        @JsonProperty("departamento")
+        private String departamento;
+
+        @Column(name = "provincia")
+        @JsonProperty("provincia")
+        private String provincia;
 
         public Long getIdUsuario() {
             return idUsuario;
@@ -112,12 +115,20 @@
             this.fotoPerfil = fotoPerfil;
         }
 
-        public Ubicacion getUbicacion() {
-            return ubicacion;
+        public String getDepartamento() {
+            return departamento;
         }
 
-        public void setUbicacion(Ubicacion ubicacion) {
-            this.ubicacion = ubicacion;
+        public void setDepartamento(String departamento) {
+            this.departamento = departamento;
+        }
+
+        public String getProvincia() {
+            return provincia;
+        }
+
+        public void setProvincia(String provincia) {
+            this.provincia = provincia;
         }
 
         public int getTelefono() {
