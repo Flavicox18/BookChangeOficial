@@ -1,16 +1,12 @@
 package pe.edu.upao.bookchange.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
-import pe.edu.upao.bookchange.entity.Genero;
 
 import java.util.Date;
-import java.util.List;
 
 @Data
 public class LibroDto {
@@ -28,8 +24,9 @@ public class LibroDto {
     private String autor;
 
     @NotNull
-    @Size(min = 0, max = 50, message = "El genero del libro debe tener más caracteres")
-    private List<Genero> genero;
+    @NotBlank(message = "El genero del libro debe tener más caracteres")
+    @Size(min = 3, max = 50)
+    private String genero;
 
     @NotNull
     @NotBlank(message = "La editorial no debe estar en blanco")
@@ -60,5 +57,4 @@ public class LibroDto {
     @Size(min = 3, max = 50)
     private String foto;
 
-    private Long idGenero;
 }

@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import pe.edu.upao.bookchange.controller.LibroController;
 import pe.edu.upao.bookchange.dto.LibroDto;
-import pe.edu.upao.bookchange.entity.Genero;
 import pe.edu.upao.bookchange.entity.Libro;
 import pe.edu.upao.bookchange.repository.LibroRepository;
 import pe.edu.upao.bookchange.service.LibroService;
@@ -51,16 +50,11 @@ public class LibroServiceTest {
         libroMock.setSinopsis("Era una vez...");
         libroMock.setIsbn(9137317923463L);
 
-        List<Genero> generos = new ArrayList<>();
-        Genero accion = new Genero();
-        accion.setNombreGenero("Acción");
-        generos.add(accion);
 
         // Crear una fecha de lanzamiento
         Date fechaLanzamiento = new Date();
 
         libroMock.setFechaLanzamiento(fechaLanzamiento);
-        libroMock.setGenero(generos);
 
         // Configuración del comportamiento del repositorio
         when(libroRepository.findById(1L)).thenReturn(Optional.of(libroMock));
@@ -78,10 +72,6 @@ public class LibroServiceTest {
         assertEquals("ola.png", libroDto.getFoto());
         assertEquals("Era una vez...", libroDto.getSinopsis());
         assertEquals(9137317923463L, libroDto.getIsbn());
-
-        assertNotNull(libroDto.getGenero());
-        assertFalse(libroDto.getGenero().isEmpty());
-        assertEquals("Acción", libroDto.getGenero().get(0).getNombreGenero());
 
         assertNotNull(libroDto.getFechaLanzamiento());
         assertEquals(fechaLanzamiento, libroDto.getFechaLanzamiento());

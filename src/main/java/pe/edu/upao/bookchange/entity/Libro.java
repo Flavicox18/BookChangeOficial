@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Data
@@ -36,6 +35,9 @@ public class Libro{
     @Column(name = "estado")
     private String estado;
 
+    @Column(name = "genero")
+    private String genero;
+
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name = "fechaLanzamiento")
     private Date fechaLanzamiento;
@@ -53,12 +55,4 @@ public class Libro{
             estado = "disponible";
         }
     }
-
-    @ManyToMany
-    @JoinTable(
-            name = "libro_genero",
-            joinColumns = @JoinColumn(name = "libro_id"),
-            inverseJoinColumns = @JoinColumn(name = "genero_id")
-    )
-    private List<Genero> genero;
 }

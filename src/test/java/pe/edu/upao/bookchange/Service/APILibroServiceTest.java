@@ -33,6 +33,7 @@ public class APILibroServiceTest {
         libro.setFechaLanzamiento(new Date());
         libro.setSinopsis("Sinopsis del Libro");
         libro.setFoto("URL de la foto del Libro");
+        libro.setGenero("Acción");
 
         // Obtener la dirección a partir de los atributos del Libro
         String direccion = String.format(

@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.client.RestTemplate;
 import pe.edu.upao.bookchange.dto.LibroDto;
-import pe.edu.upao.bookchange.entity.Genero;
 import pe.edu.upao.bookchange.entity.Libro;
 import pe.edu.upao.bookchange.exception.LibroNoEncontradoException;
 import pe.edu.upao.bookchange.repository.LibroRepository;
@@ -145,16 +144,10 @@ public class LibroService {
 
             fechaLanzamiento.ifPresent(libro::setFechaLanzamiento);
 
-            // Categoria (Género)
-            if (volumeInfo.getCategories() != null && !volumeInfo.getCategories().isEmpty()) {
-                List<Genero> generos = volumeInfo.getCategories().stream()
-                        .map(categoria -> {
-                            Genero genero = new Genero();
-                            genero.setNombreGenero(categoria);
-                            return genero;
-                        })
-                        .collect(Collectors.toList());
-                libro.setGenero(generos);
+            // Géneros
+            if (!CollectionUtils.isEmpty(volumeInfo.getCategories())) {
+                libro.setGenero(volumeInfo.getCategories().get(0));
+                // Si solo quieres la primera categoría, de lo contrario, puedes manejar la lista completa según tus necesidades.
             }
 
             return libro;
@@ -162,8 +155,6 @@ public class LibroService {
             // Puedes lanzar una excepción, devolver null o un libro "vacío" según tu lógica
             return null;
         }
-
-
     }
 
     private Date parseFechaLanzamiento(String fechaLanzamiento) {
