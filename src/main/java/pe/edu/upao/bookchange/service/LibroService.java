@@ -47,16 +47,17 @@ public class LibroService {
         libroRepository.save(libro);
     }
 
-    public LibroDto detallesLibro(Long id) {
-        // Aquí puedes consultar la entidad Libro por su ID desde el repositorio
-        Libro libro = libroRepository.findById(id).orElse(null);
+    public LibroDto detallesLibro(Long idLibro) {
+        Optional<Libro> optionalLibro = libroRepository.findById(idLibro);
 
-        if (libro != null) {
-            // Luego, puedes convertir la entidad Libro en un LibroDTO si es necesario
+        if (optionalLibro.isPresent()) {
+            Libro libro = optionalLibro.get();
+            // Transformar Libro a LibroDto y devolverlo
             return convertirLibroaLibroDto(libro);
+        } else {
+            // Manejar el caso cuando no se encuentra el libro
+            return null;
         }
-
-        return null; // Manejo de errores si el libro no se encuentra
     }
 
     public List<LibroDto> listarLibrosDisponibles() {

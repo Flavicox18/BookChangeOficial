@@ -35,14 +35,13 @@ public class IntercambioController {
 
             return ResponseEntity.badRequest().body(errorMessage + "" + errors);
         }
-
         Intercambio newIntercambio = intercambioService.addIntercambio(intercambio);
         return ResponseEntity.status(HttpStatus.OK).body("Solicitud Creada");
 
     }
-
     @PutMapping("/{id}/aceptar")
     public ResponseEntity<?> aceptarIntercambio(@Valid @PathVariable Integer id) {
+        System.out.println("IntercambioService: " + intercambioService);
         try {
             intercambioService.aceptarIntercambio(id);
             return ResponseEntity.ok("Intercambio aceptado");

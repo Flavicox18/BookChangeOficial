@@ -11,11 +11,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import pe.edu.upao.bookchange.controller.LibroController;
 import pe.edu.upao.bookchange.dto.LibroDto;
+import pe.edu.upao.bookchange.entity.Genero;
 import pe.edu.upao.bookchange.entity.Libro;
 import pe.edu.upao.bookchange.repository.LibroRepository;
 import pe.edu.upao.bookchange.service.LibroService;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,6 +46,21 @@ public class LibroServiceTest {
         libroMock.setNombre("El Gran Libro");
         libroMock.setAutor("Autor Anónimo");
         libroMock.setEstado("disponible");
+        libroMock.setEditorial("Santillana");
+        libroMock.setFoto("ola.png");
+        libroMock.setSinopsis("Era una vez...");
+        libroMock.setIsbn(9137317923463L);
+
+        List<Genero> generos = new ArrayList<>();
+        Genero accion = new Genero();
+        accion.setNombreGenero("Acción");
+        generos.add(accion);
+
+        // Crear una fecha de lanzamiento
+        Date fechaLanzamiento = new Date();
+
+        libroMock.setFechaLanzamiento(fechaLanzamiento);
+        libroMock.setGenero(generos);
 
         // Configuración del comportamiento del repositorio
         when(libroRepository.findById(1L)).thenReturn(Optional.of(libroMock));
@@ -57,6 +74,17 @@ public class LibroServiceTest {
         assertEquals("El Gran Libro", libroDto.getNombre());
         assertEquals("Autor Anónimo", libroDto.getAutor());
         assertEquals("disponible", libroDto.getEstado());
+        assertEquals("Santillana", libroDto.getEditorial());
+        assertEquals("ola.png", libroDto.getFoto());
+        assertEquals("Era una vez...", libroDto.getSinopsis());
+        assertEquals(9137317923463L, libroDto.getIsbn());
+
+        assertNotNull(libroDto.getGenero());
+        assertFalse(libroDto.getGenero().isEmpty());
+        assertEquals("Acción", libroDto.getGenero().get(0).getNombreGenero());
+
+        assertNotNull(libroDto.getFechaLanzamiento());
+        assertEquals(fechaLanzamiento, libroDto.getFechaLanzamiento());
     }
 
     @Test
@@ -89,24 +117,18 @@ public class LibroServiceTest {
         assertEquals(2, librosDto.size());
         assertEquals(1L, librosDto.get(0).getIdLibro());
         assertEquals(2L, librosDto.get(1).getIdLibro());
-        // Verifica otros atributos si es necesario
     }
 
     @Test
     public void testDetallesLibro_NoEncontrado() {
         // Configuración del comportamiento del repositorio para devolver un libro vacío
         when(libroRepository.findById(1L)).thenReturn(Optional.empty());
-
-        // Prueba del método obtenerDetallesLibro
         LibroDto libroDto = libroService.detallesLibro(1L);
-
-        // Verificación de resultados
         assertNull(libroDto);
     }
 
     @Test
     public void testBuscarLibroPorTituloOAutor() {
-        // Mock de varios libros disponibles
         Libro libro1 = new Libro();
         libro1.setIdLibro(1L);
         libro1.setNombre("Libro 1");
@@ -133,7 +155,6 @@ public class LibroServiceTest {
         // Verificación de resultados
         assertNotNull(librosDto);
         assertEquals(2, librosDto.size());
-        // Verifica otros atributos si es necesario
     }
 
     @Test
@@ -174,17 +195,11 @@ public class LibroServiceTest {
         Libro libroExistente = new Libro();
         libroExistente.setIdLibro(idLibro);
 
-        // Configuración del comportamiento del repositorio
         when(libroRepository.findById(idLibro)).thenReturn(Optional.of(libroExistente));
-
-        // Prueba del método eliminarLibro
         ResponseEntity<?> responseEntity = libroService.eliminarLibro(idLibro);
 
-        // Verificación de resultados
         verify(libroRepository).findById(idLibro);
         verify(libroRepository).deleteById(idLibro);
         assertEquals(ResponseEntity.status(HttpStatus.OK).body("Libro Eliminado"), responseEntity);
     }
-
-
 }
