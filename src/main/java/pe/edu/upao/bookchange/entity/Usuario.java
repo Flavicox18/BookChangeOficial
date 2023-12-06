@@ -6,6 +6,8 @@
     import lombok.Data;
     import lombok.NoArgsConstructor;
 
+    import java.util.Set;
+
 
     @Entity
     @Table(name="usuario")
@@ -146,4 +148,7 @@
         public void setDescripcion(String descripcion) {
             this.descripcion = descripcion;
         }
+
+        @OneToMany(mappedBy = "usuario")
+        private Set<LibroUsuario> libroUsuarios;
     }
