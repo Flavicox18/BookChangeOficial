@@ -24,7 +24,7 @@ public class LibroController {
         this.libroService = libroService;
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/detalles/{id}")
     public LibroDto detallesLibro(@PathVariable Long id) {
         return libroService.detallesLibro(id);
     }
@@ -84,7 +84,7 @@ public class LibroController {
         return ResponseEntity.ok("Libro Actualizado");
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<?> eliminarLibro(@PathVariable("id") Long idLibro) {
         Libro libro = libroService.findById(idLibro);
 

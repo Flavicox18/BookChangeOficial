@@ -76,14 +76,14 @@ public class UsuarioService{
     }
 
 
-    public UsuarioDto obtenerPerfilUsuario(Long idUsuario) {
+    public UsuarioDto verPerfil(Long idUsuario) {
         Usuario usuario = usuarioRepository.findById(idUsuario).orElse(null);
         if (usuario != null) {
             UsuarioDto usuarioDto = convertirUsuarioAUsuarioDto(usuario);
 
             return usuarioDto;
         }
-        return null; // O maneja el caso de usuario no encontrado según tu lógica
+        return null;
     }
 
     public void eliminarUsuario(Long idUsuario){

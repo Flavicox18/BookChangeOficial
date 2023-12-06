@@ -72,7 +72,7 @@ public class UsuarioServiceTest {
         when(usuarioRepository.findById(1L)).thenReturn(java.util.Optional.of(usuarioMock));
 
         // Ejecutamos el método para ver el perfil
-        UsuarioDto usuarioDto = usuarioService.obtenerPerfilUsuario(1L);
+        UsuarioDto usuarioDto = usuarioService.verPerfil(1L);
 
         // Verificamos que la conversión se haya realizado correctamente
         assertEquals(1L, usuarioDto.getIdUsuario());
