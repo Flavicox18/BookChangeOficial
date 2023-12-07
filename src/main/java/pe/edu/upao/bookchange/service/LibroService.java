@@ -60,7 +60,7 @@ public class LibroService {
     }
 
     public List<LibroDto> listarLibrosDisponibles() {
-        List<Libro> librosDisponibles = libroRepository.findByEstado("nuevo");
+        List<Libro> librosDisponibles = libroRepository.findAll();
 
         // Utiliza Java Stream API para convertir la lista de entidades en una lista de DTOs
         return librosDisponibles.stream()
