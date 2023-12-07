@@ -48,6 +48,7 @@ public class Intercambio {
     @Size(min = 2, max = 255, message = "El mensaje debe tener entre 2 y 255 caracteres.")
     private String mensaje;
 
+
     @PrePersist
     public void prePersist() {
         fechaInicio = LocalDate.now();

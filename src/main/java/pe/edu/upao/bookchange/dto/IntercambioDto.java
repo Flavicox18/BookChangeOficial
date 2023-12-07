@@ -11,5 +11,4 @@ public class IntercambioDto {
     private String libroOfrecido;
     private String libroSolicitado;
     private String mensaje;
-
 }
