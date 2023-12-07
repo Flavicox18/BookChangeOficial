@@ -43,6 +43,11 @@ public class Intercambio {
     @Size(min = 2, max = 255, message = "El libro solicitado debe tener entre 2 y 255 caracteres.")
     private String libroSolicitado;
 
+    @Column(nullable = false)
+    @NotBlank(message = "El mensaje no puede estar en blanco")
+    @Size(min = 2, max = 255, message = "El mensaje debe tener entre 2 y 255 caracteres.")
+    private String mensaje;
+
     @PrePersist
     public void prePersist() {
         fechaInicio = LocalDate.now();
