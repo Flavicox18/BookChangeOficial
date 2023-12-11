@@ -1,30 +1,41 @@
 package pe.edu.upao.bookchange.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pe.edu.upao.bookchange.dto.TokenDto;
+import pe.edu.upao.bookchange.dto.InicioDto;
 import pe.edu.upao.bookchange.dto.UsuarioDto;
 import pe.edu.upao.bookchange.entity.Usuario;
-import pe.edu.upao.bookchange.service.UbicacionService;
 import pe.edu.upao.bookchange.service.UsuarioService;
-
-import java.util.Map;
 
 @Tag(name = "Usuario", description = "API de gestión de usuario")
 @RestController
-@RequestMapping("/api/usuarios")
+@RequestMapping("/auth")
+@RequiredArgsConstructor
 public class UsuarioController {
 
     private final UsuarioService usuarioService;
-    private final UbicacionService ubicacionService;
-
-    public UsuarioController(UsuarioService usuarioService, UbicacionService ubicacionService) {
-        this.usuarioService = usuarioService;
-        this.ubicacionService = ubicacionService;
+    @PostMapping(value = "login33")
+    public ResponseEntity<TokenDto> login(@RequestBody InicioDto request)
+    {
+        return ResponseEntity.ok(usuarioService.login(request));
     }
 
-    @PostMapping("/guardar")
+    @PostMapping(value = "register")
+    public ResponseEntity<TokenDto> register(@RequestBody UsuarioDto request)
+    {
+        return ResponseEntity.ok(usuarioService.register(request));
+    }
+
+
+
+
+
+
+    /*@PostMapping("/guardar")
     public void guardarUsuario(@RequestBody UsuarioDto usuarioDto) {
         Usuario usuario = usuarioService.convertirUsuarioDtoAUsuario(usuarioDto);
         usuarioService.guardarUsuario(usuario);
@@ -43,7 +54,7 @@ public class UsuarioController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-    }
+    }*/
 
     @GetMapping("/ver-perfil/{id}")
     public ResponseEntity<?> verPerfil(@PathVariable("id") Long idUsuario) {
