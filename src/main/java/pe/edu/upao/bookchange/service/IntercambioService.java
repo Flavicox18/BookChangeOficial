@@ -13,9 +13,11 @@ public class IntercambioService {
 
     public final IntercambioRepository intercambioRepository;
 
-    public IntercambioService(IntercambioRepository intercambioRepository){ this.intercambioRepository = intercambioRepository;}
+    public IntercambioService(IntercambioRepository intercambioRepository) {
+        this.intercambioRepository = intercambioRepository;
+    }
 
-    public Intercambio addIntercambio(Intercambio intercambio){
+    public Intercambio addIntercambio(Intercambio intercambio) {
         return intercambioRepository.save(intercambio);
     }
 
@@ -26,6 +28,7 @@ public class IntercambioService {
         intercambio.setEstado("aceptado");
         intercambioRepository.save(intercambio);
     }
+
     public void rechazarIntercambio(Integer id) {
         Intercambio intercambio = intercambioRepository.findById(id.longValue())
                 .orElseThrow(() -> new EntityNotFoundException("Intercambio no encontrado"));
@@ -33,4 +36,5 @@ public class IntercambioService {
         intercambio.setEstado("rechazado");
         intercambioRepository.save(intercambio);
     }
+
 }

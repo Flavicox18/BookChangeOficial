@@ -10,5 +10,6 @@ public class IntercambioDto {
     private LocalDate fechaFin;
     private String libroOfrecido;
     private String libroSolicitado;
-    private String mensaje;
+
+
 }
