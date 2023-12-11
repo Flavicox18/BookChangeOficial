@@ -49,7 +49,6 @@ public class Intercambio {
     private String mensaje;
 
 
-    @Column()
     @PrePersist
     public void prePersist() {
         fechaInicio = LocalDate.now();
