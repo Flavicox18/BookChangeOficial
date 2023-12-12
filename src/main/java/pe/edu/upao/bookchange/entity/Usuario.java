@@ -1,101 +1,154 @@
-package pe.edu.upao.bookchange.entity;
+    package pe.edu.upao.bookchange.entity;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.*;
-import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+    import com.fasterxml.jackson.annotation.JsonProperty;
+    import jakarta.persistence.*;
+    import lombok.AllArgsConstructor;
+    import lombok.Data;
+    import lombok.NoArgsConstructor;
 
-import java.util.Collection;
+    import java.util.Set;
 
 
-@Entity
-@Table(name="usuario", uniqueConstraints = {@UniqueConstraint(columnNames = {"correo"})})
-@Data
-@Getter
-@Setter
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
+    @Entity
+    @Table(name="usuario")
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
 
-public class Usuario implements UserDetails{
-    @Id
-    @Column(name = "idUsuario")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idUsuario;
+    public class Usuario {
+        @Id
+        @Column(name = "idUsuario")
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        private Long idUsuario;
 
-    @Column(name = "dni")
-    @JsonProperty("dni")
-    private int dni;
+        @Column(name = "dni")
+        @JsonProperty("dni")
+        private int dni;
 
-    @Column(name = "nombre")
-    @JsonProperty("nombre")
-    private String nombre;
+        @Column(name = "nombre")
+        @JsonProperty("nombre")
+        private String nombre;
 
-    @Column(name = "apellido")
-    @JsonProperty("apellido")
-    private String apellido;
+        @Column(name = "apellido")
+        @JsonProperty("apellido")
+        private String apellido;
 
-    @Column(name = "correo")
-    @JsonProperty("correo")
-    private String correo;
+        @Column(name = "correo")
+        @JsonProperty("correo")
+        private String correo;
 
-    @Column(name = "contrasena")
-    @JsonProperty("contrasena")
-    private String contrasena;
+        @Column(name = "contrasena")
+        @JsonProperty("contrasena")
+        private String contrasena;
 
-    @Column(name = "fotoPerfil")
-    @JsonProperty("fotoPerfil")
-    private String fotoPerfil;
+        @Column(name = "fotoPerfil")
+        @JsonProperty("fotoPerfil")
+        private String fotoPerfil;
 
-    @Column(name = "telefono")
-    @JsonProperty("telefono")
-    private int telefono;
+        @Column(name = "telefono")
+        @JsonProperty("telefono")
+        private int telefono;
 
-    @Column(name = "descripcion")
-    @JsonProperty("descripcion")
-    private String descripcion;
+        @Column(name = "descripcion")
+        @JsonProperty("descripcion")
+        private String descripcion;
 
-    @Column(name = "departamento")
-    @JsonProperty("departamento")
-    private String departamento;
+        @Column(name = "departamento")
+        @JsonProperty("departamento")
+        private String departamento;
 
-    @Column(name = "provincia")
-    @JsonProperty("provincia")
-    private String provincia;
+        @Column(name = "provincia")
+        @JsonProperty("provincia")
+        private String provincia;
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        public Long getIdUsuario() {
+            return idUsuario;
+        }
+
+        public void setIdUsuario(Long idUsuario) {
+            this.idUsuario = idUsuario;
+        }
+
+        public int getDni() {
+            return dni;
+        }
+
+        public void setDni(int dni) {
+            this.dni = dni;
+        }
+
+        public String getNombre() {
+            return nombre;
+        }
+
+        public void setNombre(String nombre) {
+            this.nombre = nombre;
+        }
+
+        public String getApellido() {
+            return apellido;
+        }
+
+        public void setApellido(String apellido) {
+            this.apellido = apellido;
+        }
+
+        public String getCorreo() {
+            return correo;
+        }
+
+        public void setCorreo(String correo) {
+            this.correo = correo;
+        }
+
+        public String getContrasena() {
+            return contrasena;
+        }
+
+        public void setContrasena(String contrasena) {
+            this.contrasena = contrasena;
+        }
+
+        public String getFotoPerfil() {
+            return fotoPerfil;
+        }
+
+        public void setFotoPerfil(String fotoPerfil) {
+            this.fotoPerfil = fotoPerfil;
+        }
+
+        public String getDepartamento() {
+            return departamento;
+        }
+
+        public void setDepartamento(String departamento) {
+            this.departamento = departamento;
+        }
+
+        public String getProvincia() {
+            return provincia;
+        }
+
+        public void setProvincia(String provincia) {
+            this.provincia = provincia;
+        }
+
+        public int getTelefono() {
+            return telefono;
+        }
+
+        public void setTelefono(int telefono) {
+            this.telefono = telefono;
+        }
+
+        public String getDescripcion() {
+            return descripcion;
+        }
+
+        public void setDescripcion(String descripcion) {
+            this.descripcion = descripcion;
+        }
+
+        @OneToMany(mappedBy = "usuario")
+        private Set<LibroUsuario> libroUsuarios;
     }
-
-    @Override
-    public String getPassword() {
-        return contrasena;
-    }
-
-    @Override
-    public String getUsername() {
-        return correo;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
-}
